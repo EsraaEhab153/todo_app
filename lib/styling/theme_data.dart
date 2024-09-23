@@ -43,6 +43,10 @@ class MyThemeData {
           color: AppColors.blackColor,
           fontWeight: FontWeight.w400,
           fontSize: 15),
+      bodySmall: GoogleFonts.inter(
+          color: AppColors.primaryColor,
+          fontWeight: FontWeight.w400,
+          fontSize: 14),
     ),
   );
 }

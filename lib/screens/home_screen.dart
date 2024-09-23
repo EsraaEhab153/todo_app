@@ -16,12 +16,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'To Do List',
+          selectedIndex == 0 ? 'To Do App' : 'Settings',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
