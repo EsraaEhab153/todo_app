@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
 class ThemeBottomSheet extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Light',
+          AppLocalizations.of(context)!.light,
           style: Theme.of(context)
               .textTheme
               .titleMedium
@@ -56,7 +57,7 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
 
   Widget unSelectedItem() {
     return Text(
-      'Dark',
+      AppLocalizations.of(context)!.dark,
       style: Theme.of(context).textTheme.titleMedium,
     );
   }

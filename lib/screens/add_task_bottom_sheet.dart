@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -22,7 +23,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       child: Column(
         children: [
           Text(
-            'Add New Task',
+            AppLocalizations.of(context)!.add_new_task,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Form(
@@ -32,13 +33,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               children: [
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Add Task Title',
+                    hintText: AppLocalizations.of(context)!.add_task_title,
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   style: Theme.of(context).textTheme.bodyMedium,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Please Enter Task Title';
+                      return AppLocalizations.of(context)!
+                          .validation_task_title_msg;
                     }
                     return null;
                   },
@@ -48,14 +50,16 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Add Task Description',
+                    hintText:
+                        AppLocalizations.of(context)!.add_task_description,
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 3,
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Please Enter Task Description';
+                      return AppLocalizations.of(context)!
+                          .validation_task_description_msg;
                     }
                     return null;
                   },
@@ -64,7 +68,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Text(
-                  'Select Date',
+                  AppLocalizations.of(context)!.select_date,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
@@ -88,7 +92,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     addTask();
                   },
                   child: Text(
-                    'Add',
+                    AppLocalizations.of(context)!.add_button,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.whiteColor,
                         fontWeight: FontWeight.bold),

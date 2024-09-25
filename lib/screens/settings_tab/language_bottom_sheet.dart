@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
 class LanguageBottomSheet extends StatefulWidget {
@@ -39,7 +40,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'English',
+          AppLocalizations.of(context)!.english,
           style: Theme.of(context)
               .textTheme
               .titleMedium
@@ -56,7 +57,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
 
   Widget unSelectedItem() {
     return Text(
-      'Arabic',
+      AppLocalizations.of(context)!.arabic,
       style: Theme.of(context).textTheme.titleMedium,
     );
   }

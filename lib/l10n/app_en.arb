@@ -1,0 +1,18 @@
+{
+  "task_list": "Task List",
+  "todo_app": "To Do App",
+  "settings": "Settings",
+  "language": "Language",
+  "mode": "Mode",
+  "english": "English",
+  "arabic": "Arabic",
+  "light": "Light",
+  "dark": "Dark",
+  "add_new_task": "Add New Task",
+  "add_task_title": "Add Task Title",
+  "add_task_description": "Add Task Description",
+  "select_date": "Select Date",
+  "add_button": "Add",
+  "validation_task_title_msg": "Please Enter Task Title",
+  "validation_task_description_msg": "Please Enter Task Description"
+}

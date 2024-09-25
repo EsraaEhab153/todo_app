@@ -1,0 +1,18 @@
+{
+  "task_list": "قائمة المهام",
+  "todo_app": "تطبيق تودو",
+  "settings": "الاعدادات",
+  "language": "اللغة",
+  "mode": "الوضع",
+  "english": "الانجليزية",
+  "arabic": "العربية",
+  "light": "فاتح",
+  "dark": "داكن",
+  "add_new_task": "اضف مهمة جديدة ",
+  "add_task_title": "اضف عنوان المهمة",
+  "add_task_description": "اضف وصف المهمة",
+  "select_date": "اختر التاريخ",
+  "add_button": "اضافة",
+  "validation_task_title_msg": "من فضلك ادخل عنوان المهمة",
+  "validation_task_description_msg": "من فضلك ادخل وصف المهمة"
+}
