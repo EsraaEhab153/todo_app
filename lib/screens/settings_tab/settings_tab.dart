@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/screens/settings_tab/language_bottom_sheet.dart';
 import 'package:todo_app/screens/settings_tab/theme_bottom_sheet.dart';
 import 'package:todo_app/styling/app_colors.dart';
@@ -28,7 +29,7 @@ class _SettingsTabState extends State<SettingsTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Language',
+                AppLocalizations.of(context)!.language,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium
@@ -52,7 +53,7 @@ class _SettingsTabState extends State<SettingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'English',
+                        AppLocalizations.of(context)!.english,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Icon(
@@ -65,7 +66,7 @@ class _SettingsTabState extends State<SettingsTab> {
                 ),
               ),
               Text(
-                'Mode',
+                AppLocalizations.of(context)!.mode,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium
@@ -89,7 +90,7 @@ class _SettingsTabState extends State<SettingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Light',
+                        AppLocalizations.of(context)!.light,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Icon(
