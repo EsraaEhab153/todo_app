@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/language_provider.dart';
 import 'package:todo_app/screens/settings_tab/language_bottom_sheet.dart';
 import 'package:todo_app/screens/settings_tab/theme_bottom_sheet.dart';
 import 'package:todo_app/styling/app_colors.dart';
@@ -14,6 +16,7 @@ class SettingsTab extends StatefulWidget {
 class _SettingsTabState extends State<SettingsTab> {
   @override
   Widget build(BuildContext context) {
+    var langProvider = Provider.of<AppLanguageProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Column(
@@ -38,6 +41,7 @@ class _SettingsTabState extends State<SettingsTab> {
               InkWell(
                 onTap: () {
                   showLanguageBottomSheet();
+                  setState(() {});
                 },
                 child: Container(
                   margin: EdgeInsets.all(width * 0.04),
@@ -53,7 +57,9 @@ class _SettingsTabState extends State<SettingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.english,
+                        langProvider.appLanguage == 'en'
+                            ? AppLocalizations.of(context)!.english
+                            : AppLocalizations.of(context)!.arabic,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Icon(

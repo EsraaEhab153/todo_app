@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/language_provider.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
 class LanguageBottomSheet extends StatefulWidget {
@@ -12,6 +14,8 @@ class LanguageBottomSheet extends StatefulWidget {
 class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    var langProvider = Provider.of<AppLanguageProvider>(context);
+
     return Container(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
       width: MediaQuery.of(context).size.width * 0.25,
@@ -20,27 +24,37 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () {},
-            child: selectedItem(),
+            onTap: () {
+              //change language to english
+              langProvider.changLanguage('en');
+            },
+            child: langProvider.appLanguage == 'en'
+                ? selectedItem(AppLocalizations.of(context)!.english)
+                : unSelectedItem(AppLocalizations.of(context)!.english),
           ),
-          Divider(
+          const Divider(
             color: AppColors.primaryColor,
           ),
           InkWell(
-            onTap: () {},
-            child: unSelectedItem(),
+            onTap: () {
+              //change language to arabic
+              langProvider.changLanguage('ar');
+            },
+            child: langProvider.appLanguage == 'ar'
+                ? selectedItem(AppLocalizations.of(context)!.arabic)
+                : unSelectedItem(AppLocalizations.of(context)!.arabic),
           )
         ],
       ),
     );
   }
 
-  Widget selectedItem() {
+  Widget selectedItem(String language) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          AppLocalizations.of(context)!.english,
+          language,
           style: Theme.of(context)
               .textTheme
               .titleMedium
@@ -55,9 +69,9 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
     );
   }
 
-  Widget unSelectedItem() {
+  Widget unSelectedItem(String language) {
     return Text(
-      AppLocalizations.of(context)!.arabic,
+      language,
       style: Theme.of(context).textTheme.titleMedium,
     );
   }
