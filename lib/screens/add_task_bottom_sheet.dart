@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -15,10 +17,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.1,
-        vertical: MediaQuery.of(context).size.height * 0.02,
+        vertical: MediaQuery.of(context).size.height * 0.01,
       ),
       child: Column(
         children: [
@@ -35,6 +38,21 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!.add_task_title,
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: themeProvider.isDark()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: themeProvider.isDark()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor)),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: themeProvider.isDark()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor)),
                   ),
                   style: Theme.of(context).textTheme.bodyMedium,
                   validator: (text) {
@@ -46,13 +64,28 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   },
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
+                  height: MediaQuery.of(context).size.height * 0.001,
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText:
                         AppLocalizations.of(context)!.add_task_description,
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: themeProvider.isDark()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: themeProvider.isDark()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor)),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: themeProvider.isDark()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor)),
                   ),
                   style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 3,
@@ -114,6 +147,19 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            textTheme: const TextTheme(
+              headlineMedium: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     chosenDate = selectedDate ?? chosenDate;
     setState(() {});
