@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 
 import '../../styling/app_colors.dart';
 
@@ -9,13 +11,16 @@ class TaskListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.symmetric(horizontal: width * 0.04),
       height: height * 0.13,
       width: width * 0.8,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: themeProvider.isDark()
+            ? AppColors.darkGrayColor
+            : AppColors.whiteColor,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(

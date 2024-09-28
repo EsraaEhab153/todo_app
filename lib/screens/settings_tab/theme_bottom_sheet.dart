@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
 class ThemeBottomSheet extends StatefulWidget {
@@ -12,6 +14,8 @@ class ThemeBottomSheet extends StatefulWidget {
 class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
+
     return Container(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
       width: MediaQuery.of(context).size.width * 0.25,
@@ -20,27 +24,37 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: () {},
-            child: selectedItem(),
+            onTap: () {
+              //change theme to light
+              themeProvider.changeTheme(ThemeMode.light);
+            },
+            child: themeProvider.isDark()
+                ? unSelectedItem(AppLocalizations.of(context)!.light)
+                : selectedItem(AppLocalizations.of(context)!.light),
           ),
-          Divider(
+          const Divider(
             color: AppColors.primaryColor,
           ),
           InkWell(
-            onTap: () {},
-            child: unSelectedItem(),
+            onTap: () {
+              //change theme to dark
+              themeProvider.changeTheme(ThemeMode.dark);
+            },
+            child: themeProvider.isDark()
+                ? selectedItem(AppLocalizations.of(context)!.dark)
+                : unSelectedItem(AppLocalizations.of(context)!.dark),
           )
         ],
       ),
     );
   }
 
-  Widget selectedItem() {
+  Widget selectedItem(String theme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          AppLocalizations.of(context)!.light,
+          theme,
           style: Theme.of(context)
               .textTheme
               .titleMedium
@@ -55,9 +69,9 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
     );
   }
 
-  Widget unSelectedItem() {
+  Widget unSelectedItem(String theme) {
     return Text(
-      AppLocalizations.of(context)!.dark,
+      theme,
       style: Theme.of(context).textTheme.titleMedium,
     );
   }

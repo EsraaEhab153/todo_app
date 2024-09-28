@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/language_provider.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/screens/settings_tab/language_bottom_sheet.dart';
 import 'package:todo_app/screens/settings_tab/theme_bottom_sheet.dart';
 import 'package:todo_app/styling/app_colors.dart';
@@ -17,6 +18,7 @@ class _SettingsTabState extends State<SettingsTab> {
   @override
   Widget build(BuildContext context) {
     var langProvider = Provider.of<AppLanguageProvider>(context);
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Column(
@@ -41,7 +43,6 @@ class _SettingsTabState extends State<SettingsTab> {
               InkWell(
                 onTap: () {
                   showLanguageBottomSheet();
-                  setState(() {});
                 },
                 child: Container(
                   margin: EdgeInsets.all(width * 0.04),
@@ -49,7 +50,9 @@ class _SettingsTabState extends State<SettingsTab> {
                   width: width * 0.7,
                   height: height * 0.05,
                   decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
+                    color: themeProvider.isDark()
+                        ? AppColors.darkGrayColor
+                        : AppColors.whiteColor,
                     border:
                         Border.all(color: AppColors.primaryColor, width: 1.5),
                   ),
@@ -88,7 +91,9 @@ class _SettingsTabState extends State<SettingsTab> {
                   width: width * 0.7,
                   height: height * 0.05,
                   decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
+                    color: themeProvider.isDark()
+                        ? AppColors.darkGrayColor
+                        : AppColors.whiteColor,
                     border:
                         Border.all(color: AppColors.primaryColor, width: 1.5),
                   ),
@@ -96,7 +101,9 @@ class _SettingsTabState extends State<SettingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.light,
+                        themeProvider.isDark()
+                            ? AppLocalizations.of(context)!.dark
+                            : AppLocalizations.of(context)!.light,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Icon(
