@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: selectedIndex == 0 ? const TaskListTab() : const SettingsTab(),
+      body: selectedIndex == 0 ? TaskListTab() : const SettingsTab(),
     );
   }
 

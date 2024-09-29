@@ -1,16 +1,34 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/providers/language_provider.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/styling/theme_data.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: FirebaseOptions(
+              apiKey: 'AIzaSyCMa9gD_xF5qDE4gJGAPLapAHIPO4kmKHE',
+              appId: 'com.example.todo_app',
+              messagingSenderId: '542304008037',
+              projectId: 'my-todo-app-4ef70'))
+      : await Firebase.initializeApp();
+  await FirebaseFirestore.instance.disableNetwork();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
     ChangeNotifierProvider(create: (context) => AppThemeProvider()),
-  ], child: const MyApp()));
+      ],
+      child: MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => TaskListProvider())
+      ], child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
