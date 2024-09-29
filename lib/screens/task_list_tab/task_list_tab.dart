@@ -1,16 +1,26 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/providers/language_provider.dart';
 import 'package:todo_app/screens/task_list_tab/task_list_item.dart';
 
 import '../../styling/app_colors.dart';
 
-class TaskListTab extends StatelessWidget {
-  const TaskListTab({super.key});
+class TaskListTab extends StatefulWidget {
+  TaskListTab({super.key});
 
   @override
+  State<TaskListTab> createState() => _TaskListTabState();
+}
+
+class _TaskListTabState extends State<TaskListTab> {
+  @override
   Widget build(BuildContext context) {
+    var taskListProvider = Provider.of<TaskListProvider>(context);
+    if (taskListProvider.taskList.isEmpty) {
+      taskListProvider.getAllTasksFromFireStore();
+    }
     var height = MediaQuery.of(context).size.height;
     var langProvider = Provider.of<AppLanguageProvider>(context);
     return Column(
@@ -23,9 +33,9 @@ class TaskListTab extends StatelessWidget {
               color: AppColors.primaryColor,
             ),
             EasyDateTimeLine(
-              initialDate: DateTime.now(),
+              initialDate: taskListProvider.selectedDate,
               onDateChange: (selectedDate) {
-                //`selectedDate` the new date selected.
+                taskListProvider.changDate(selectedDate);
               },
               locale: langProvider.appLanguage,
               headerProps: const EasyHeaderProps(
@@ -70,8 +80,9 @@ class TaskListTab extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) => TaskListItem(),
-            itemCount: 30,
+            itemBuilder: (context, index) =>
+                TaskListItem(task: taskListProvider.taskList[index]),
+            itemCount: taskListProvider.taskList.length,
           ),
         ),
       ],
