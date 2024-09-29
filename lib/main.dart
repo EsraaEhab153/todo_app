@@ -13,6 +13,10 @@ import 'package:todo_app/styling/theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AppLanguageProvider langProvider = AppLanguageProvider();
+  AppThemeProvider themeProvider = AppThemeProvider();
+  await langProvider.getLang();
+  await themeProvider.getTheme();
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: FirebaseOptions(
@@ -23,8 +27,8 @@ void main() async {
       : await Firebase.initializeApp();
   await FirebaseFirestore.instance.disableNetwork();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
-    ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => langProvider),
+        ChangeNotifierProvider(create: (context) => themeProvider),
       ],
       child: MultiProvider(providers: [
         ChangeNotifierProvider(create: (context) => TaskListProvider())
