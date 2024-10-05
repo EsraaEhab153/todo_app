@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Task {
   static const String collectionName = 'tasks';
   String id;
@@ -22,7 +24,9 @@ class Task {
           id: json['id'] as String,
           title: json['title'] as String,
           description: json['description'] as String,
-          dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
+          dateTime: (json['dateTime'] is Timestamp)
+              ? (json['dateTime'] as Timestamp).toDate()
+              : DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
           isDone: json['isDone'] as bool,
         );
 
