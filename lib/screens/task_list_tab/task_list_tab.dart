@@ -5,6 +5,7 @@ import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/providers/language_provider.dart';
 import 'package:todo_app/screens/task_list_tab/task_list_item.dart';
 
+import '../../provider/user_provider.dart';
 import '../../styling/app_colors.dart';
 
 class TaskListTab extends StatefulWidget {
@@ -18,8 +19,9 @@ class _TaskListTabState extends State<TaskListTab> {
   @override
   Widget build(BuildContext context) {
     var taskListProvider = Provider.of<TaskListProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     if (taskListProvider.taskList.isEmpty) {
-      taskListProvider.getAllTasksFromFireStore();
+      taskListProvider.getAllTasksFromFireStore(userProvider.currentUser!.id!);
     }
     var height = MediaQuery.of(context).size.height;
     var langProvider = Provider.of<AppLanguageProvider>(context);
@@ -35,7 +37,8 @@ class _TaskListTabState extends State<TaskListTab> {
             EasyDateTimeLine(
               initialDate: taskListProvider.selectedDate,
               onDateChange: (selectedDate) {
-                taskListProvider.changDate(selectedDate);
+                taskListProvider.changDate(
+                    selectedDate, userProvider.currentUser!.id!);
               },
               locale: langProvider.appLanguage,
               headerProps: const EasyHeaderProps(

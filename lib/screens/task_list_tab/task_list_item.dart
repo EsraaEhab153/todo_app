@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_utils.dart';
@@ -6,19 +7,26 @@ import 'package:todo_app/model/task_model.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 
 import '../../provider/task_list_provider.dart';
+import '../../provider/user_provider.dart';
 import '../../styling/app_colors.dart';
 
-class TaskListItem extends StatelessWidget {
+class TaskListItem extends StatefulWidget {
   Task task;
 
   TaskListItem({super.key, required this.task});
 
+  @override
+  State<TaskListItem> createState() => _TaskListItemState();
+}
+
+class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var themeProvider = Provider.of<AppThemeProvider>(context);
     var listProvider = Provider.of<TaskListProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
 
     return Container(
       margin: const EdgeInsets.all(10),
@@ -27,23 +35,32 @@ class TaskListItem extends StatelessWidget {
         startActionPane: ActionPane(
           extentRatio: 0.25,
           // A motion is a widget used to control how the pane animates.
-          motion: const ScrollMotion(),
+          motion: const BehindMotion(),
           // All actions are defined in the children parameter.
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                bottomLeft: Radius.circular(15.0),
+              ),
               onPressed: (context) {
-                FirebaseUtils.deleteTask(task).timeout(Duration(seconds: 1),
-                    onTimeout: () {
+                FirebaseUtils.deleteTask(
+                        widget.task, userProvider.currentUser!.id!)
+                    .then((value) {
                   print('Task Deleted Successfully');
+                  listProvider
+                      .getAllTasksFromFireStore(userProvider.currentUser!.id!);
+                }).timeout(Duration(seconds: 1), onTimeout: () {
+                  print('Task Deleted Successfully');
+                  listProvider
+                      .getAllTasksFromFireStore(userProvider.currentUser!.id!);
                 });
-                listProvider.getAllTasksFromFireStore();
               },
               backgroundColor: AppColors.redColor,
               foregroundColor: AppColors.whiteColor,
               icon: Icons.delete,
-              label: 'Delete',
+              label: AppLocalizations.of(context)!.delete,
             ),
           ],
         ),
@@ -67,21 +84,23 @@ class TaskListItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)),
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      task.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: AppColors.primaryColor),
-                    ),
-                    Text(
-                      task.description,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.task.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: AppColors.primaryColor),
+                      ),
+                      Text(
+                        widget.task.description,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(

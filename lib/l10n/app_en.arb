@@ -14,5 +14,12 @@
   "select_date": "Select Date",
   "add_button": "Add",
   "validation_task_title_msg": "Please Enter Task Title",
-  "validation_task_description_msg": "Please Enter Task Description"
+  "validation_task_description_msg": "Please Enter Task Description",
+  "delete": "Delete",
+  "welcome_back": "Welcome Back !",
+  "login": "Login",
+  "register": "Register",
+  "forget_password": "forget password",
+  "or_create_account": "Or Create Account",
+  "create_account": "Create Account"
 }

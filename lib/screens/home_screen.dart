@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/auth/login/login_screen.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/screens/add_task_bottom_sheet.dart';
 import 'package:todo_app/screens/settings_tab/settings_tab.dart';
 import 'package:todo_app/screens/task_list_tab/task_list_tab.dart';
 
+import '../provider/user_provider.dart';
 import '../styling/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,18 +25,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+    var taskListProvider = Provider.of<TaskListProvider>(context);
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           selectedIndex == 0
-              ? AppLocalizations.of(context)!.todo_app
+              ? '${AppLocalizations.of(context)!.todo_app}, ${userProvider.currentUser!.name}'
               : AppLocalizations.of(context)!.settings,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
               color: themeProvider.isDark()
                   ? AppColors.blackColor
                   : AppColors.whiteColor),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                taskListProvider.taskList = [];
+                userProvider.currentUser = null;
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
+              icon: Icon(
+                Icons.logout,
+                size: width * 0.08,
+              ))
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
