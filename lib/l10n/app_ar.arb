@@ -14,5 +14,12 @@
   "select_date": "اختر التاريخ",
   "add_button": "اضافة",
   "validation_task_title_msg": "من فضلك ادخل عنوان المهمة",
-  "validation_task_description_msg": "من فضلك ادخل وصف المهمة"
+  "validation_task_description_msg": "من فضلك ادخل وصف المهمة",
+  "delete": "حذف",
+  "welcome_back": "مرحبا بعودتك !",
+  "login": "تسجيل الدخول",
+  "register": "التسجيل",
+  "forget_password": "نسيت كلمة السر",
+  "or_create_account": "او انشاء حساب",
+  "create_account": "انشاء حساب"
 }

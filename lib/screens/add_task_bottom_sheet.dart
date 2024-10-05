@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/model/task_model.dart';
+import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/styling/app_colors.dart';
 
@@ -183,10 +184,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     if (_formKey.currentState?.validate() == true) {
       Task task =
           Task(title: title, description: description, dateTime: chosenDate);
-      FirebaseUtils.addTask(task).timeout(const Duration(seconds: 1),
-          onTimeout: () {
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      FirebaseUtils.addTask(task, userProvider.currentUser!.id!).then((value) {
         print('Task Added successfully');
-        listProvider.getAllTasksFromFireStore();
+        listProvider.getAllTasksFromFireStore(userProvider.currentUser!.id!);
+        Navigator.pop(context);
+      }).timeout(const Duration(seconds: 1), onTimeout: () {
+        print('Task Added successfully');
+        listProvider.getAllTasksFromFireStore(userProvider.currentUser!.id!);
         Navigator.pop(context);
       });
     }

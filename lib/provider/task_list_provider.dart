@@ -7,11 +7,12 @@ import '../model/task_model.dart';
 class TaskListProvider extends ChangeNotifier {
   List<Task> taskList = [];
   DateTime selectedDate = DateTime.now();
+  bool isDone = false;
 
-  void getAllTasksFromFireStore() async {
+  void getAllTasksFromFireStore(String uid) async {
     // get tasks from fireStore
     QuerySnapshot<Task> querySnapshot =
-        await FirebaseUtils.getTaskCollection().get();
+        await FirebaseUtils.getTaskCollection(uid).get();
     taskList = querySnapshot.docs.map((doc) => doc.data()).toList();
     // filter the tasks based on user selected date
     taskList = taskList.where((task) {
@@ -30,8 +31,12 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changDate(DateTime newDate) {
+  void changDate(DateTime newDate, String uid) {
     selectedDate = newDate;
-    getAllTasksFromFireStore();
+    getAllTasksFromFireStore(uid);
+  }
+
+  void changDone(bool newIsDone) {
+    isDone = newIsDone;
   }
 }
