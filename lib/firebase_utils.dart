@@ -42,4 +42,12 @@ class FirebaseUtils {
     var querySnapshot = await getUsersCollection().doc(userId).get();
     return querySnapshot.data();
   }
+
+  static Future<void> updateIsDone({required String uid, required Task task}) {
+    return getTaskCollection(uid).doc(task.id).update({'isDone': task.isDone});
+  }
+
+  static Future<void> editTask({required String uid, required Task task}) {
+    return getTaskCollection(uid).doc(task.id).update(task.toJson());
+  }
 }

@@ -35,10 +35,8 @@ void main() async {
           create: (context) => themeProvider,
         ),
         ChangeNotifierProvider(create: (context) => UserProvider()),
-      ],
-      child: MultiProvider(providers: [
-        ChangeNotifierProvider(create: (context) => TaskListProvider())
-      ], child: MyApp())));
+    ChangeNotifierProvider(create: (context) => TaskListProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
